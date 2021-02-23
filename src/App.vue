@@ -1,9 +1,14 @@
 <template>
   <div class="container-fluid px-0 flex-shrink-0">
     <global-header :user="currentUser"></global-header>
+    <todo-list> </todo-list>
+
     <router-view></router-view>
-    <loader v-if="isLoading" text="拼命加载中"  
-    background="rgba(0, 0, 0, 0.8)"></loader>
+    <loader
+      v-if="isLoading"
+      text="拼命加载中"
+      background="rgba(0, 0, 0, 0.8)"
+    ></loader>
   </div>
   <footer class="text-center py-4 text-secondary bg-light mt-auto">
     <small>
@@ -19,41 +24,46 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, watch } from 'vue'
-import { useStore } from 'vuex'
-import { GlobalDataProps } from './store/types'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import GlobalHeader from './components/GlobalHeader.vue'
-import Loader from './base/Loader.vue'
-import createMessage from './base/createMessage'
+import { defineComponent, computed, watch } from "vue";
+import { useStore } from "vuex";
+import { GlobalDataProps } from "./store/types";
+import "bootstrap/dist/css/bootstrap.min.css";
+import GlobalHeader from "./components/GlobalHeader.vue";
+import TodoList from "./components/TodoListCom.vue";
+import Loader from "./base/Loader.vue";
+import createMessage from "./base/createMessage";
 
 export default defineComponent({
-  name: 'App',
+  name: "App",
   components: {
     GlobalHeader,
-    Loader
+    Loader,
+    TodoList,
   },
-  setup () {
-    const store = useStore<GlobalDataProps>()
-    const currentUser = computed(() => store.state.user)
-    const isLoading = computed(() => store.state.loading)
-    const error = computed(() => store.state.error)
+  setup() {
+    const store = useStore<GlobalDataProps>();
+    const currentUser = computed(() => store.state.user);
+    const isLoading = computed(() => store.state.loading);
+    const error = computed(() => store.state.error);
 
     // watch 可以接收一个 getters
-    watch(() => error.value.status, () => {
-      const { status, message } = error.value
-      if (status && message) {
-        createMessage(message, 'error')
+    watch(
+      () => error.value.status,
+      () => {
+        const { status, message } = error.value;
+        if (status && message) {
+          createMessage(message, "error");
+        }
       }
-    })
+    );
 
     return {
       currentUser,
       isLoading,
-      error
-    }
-  }
-})
+      error,
+    };
+  },
+});
 </script>
 
 <style>
