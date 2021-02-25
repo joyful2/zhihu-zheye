@@ -6,7 +6,12 @@
       :class="classObject"
     >
       <span>{{ message }}</span>
-      <button type="button" class="close btn-close" aria-label="Close" @click.prevent="hide">
+      <button
+        type="button"
+        class="close btn-close"
+        aria-label="Close"
+        @click.prevent="hide"
+      >
         <!-- <span aria-hidden="true">&times;</span> -->
       </button>
     </div>
@@ -14,40 +19,41 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from 'vue'
-import { MessageType } from '../store/types'
-import useDOMCreate from '../hooks/useDOMCreate'
+import { defineComponent, PropType, ref } from "vue";
+import { MessageType } from "../store/types";
+import useDOMCreate from "../hooks/useDOMCreate";
 
 export default defineComponent({
-  name: 'Message',
+  name: "Message",
   props: {
     message: String,
     type: {
       type: String as PropType<MessageType>,
-      default: 'default'
-    }
+      default: "default",
+    },
   },
-  emits: ['close-message'],
-  setup (props, context) {
-    useDOMCreate('message')
-    const isVisible = ref(true)
+  emits: ["close-message"],
+  setup(props, context) {
+    // todo: 为什么这里要useDOMCreate创建div?
+    useDOMCreate("message");
+    const isVisible = ref(true);
     const classObject = {
-      'alert-success': props.type === 'success',
-      'alert-danger': props.type === 'error',
-      'alert-primary': props.type === 'default'
-    }
+      "alert-success": props.type === "success",
+      "alert-danger": props.type === "error",
+      "alert-primary": props.type === "default",
+    };
     const hide = () => {
-      isVisible.value = false
-      context.emit('close-message', true)
-    }
+      isVisible.value = false;
+      context.emit("close-message", true);
+    };
 
     return {
       isVisible,
       classObject,
-      hide
-    }
-  }
-})
+      hide,
+    };
+  },
+});
 </script>
 
 <style scoped>

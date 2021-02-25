@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid px-0 flex-shrink-0">
-    <global-header :user="currentUser"></global-header>
-    <todo-list> </todo-list>
+    <GlobalHeader :user="currentUser"></GlobalHeader>
+    <!-- <TodoList> </TodoList> -->
 
     <router-view></router-view>
     <loader

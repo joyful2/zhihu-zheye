@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, provide } from "vue";
+import { defineComponent, provide, reactive, ref, readonly } from "vue";
 import TodoList from "../base/TodoList.vue";
 import InputCom from "../base/InputCom.vue";
 
@@ -16,7 +16,7 @@ export default defineComponent({
   data() {
     return {
       list: ["--a", "B", "c"],
-      input: "dd",
+      input: "d",
     };
   },
   components: {
@@ -36,7 +36,8 @@ export default defineComponent({
   },
 
   created() {
-    provide("handleDel", this.handleDel);
+    const handleDel = this.handleDel;
+    provide("handleDel", handleDel);
   },
 });
 </script>
